@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crystal Prime — Real Estate Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --navy-light: #0f2240;
+  --white: #ffffff;
+  --coral: #e85d4a;
+  --coral-light: #f0806e;
+  --gold: #c9a96e;
+  --gold-light: #dfc89b;
+  --sky: #a8d8ea;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-400: #868e96;
+  --gray-600: #495057;
+  --gray-800: #212529;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 1px 3px rgba(10,22,40,0.08);
+  --shadow-md: 0 4px 20px rgba(10,22,40,0.10);
+  --shadow-lg: 0 8px 40px rgba(10,22,40,0.12);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--gray-800);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAVIGATION */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 0 2rem;
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--navy);
+  letter-spacing: -0.02em; text-decoration: none;
+}
+.logo span { color: var(--coral); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a {
+  text-decoration: none; color: var(--gray-600);
+  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.02em;
+  transition: color var(--transition); position: relative;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--navy); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: var(--coral); transition: width var(--transition);
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-cta {
+  background: var(--navy); color: var(--white) !important;
+  padding: 0.6rem 1.5rem; border-radius: 100px;
+  font-size: 0.85rem !important; transition: background var(--transition);
+}
+.nav-cta:hover { background: var(--navy-light); }
+.nav-cta::after { display: none !important; }
+.mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  background: linear-gradient(135deg, var(--navy) 0%, #0d1f3c 40%, #122a4a 100%);
+  position: relative; overflow: hidden; padding: 120px 2rem 80px;
+}
+.hero::before {
+  content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,93,74,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -10%; left: -5%; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-inner {
+  max-width: 1280px; margin: 0 auto; position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+.hero-content h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 500; font-size: 1.4rem;
+  color: var(--gold-light); margin-bottom: 0.5rem; letter-spacing: 0.03em;
+}
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.hero-content h1 span { color: var(--coral); }
+.hero-content p {
+  color: rgba(255,255,255,0.7); font-size: 1.1rem; font-weight: 300;
+  line-height: 1.7; max-width: 480px; margin-bottom: 2.5rem;
+}
+.hero-cta {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block; background: var(--coral); color: var(--white);
+  padding: 0.9rem 2rem; border-radius: 100px; text-decoration: none;
+  font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em;
+  transition: all var(--transition); border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--coral-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,93,74,0.3); }
+.btn-outline {
+  display: inline-block; background: transparent; color: var(--white);
+  padding: 0.9rem 2rem; border-radius: 100px; text-decoration: none;
+  font-weight: 500; font-size: 0.95rem; letter-spacing: 0.02em;
+  border: 1.5px solid rgba(255,255,255,0.3); transition: all var(--transition);
+}
+.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+.hero-visual {
+  position: relative; display: flex; justify-content: center; align-items: center;
+}
+.hero-card {
+  background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 24px;
+  padding: 2.5rem; width: 100%; max-width: 420px;
+}
+.hero-card .stat-line {
+  display: flex; justify-content: space-between; padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero-card .stat-line:last-child { border: none; }
+.hero-card .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.hero-card .stat-value { color: var(--white); font-weight: 600; font-size: 1rem; }
+.hero-card .stat-value.highlight { color: var(--coral); font-size: 1.2rem; }
+
+/* SECTION COMMON */
+section { padding: 6rem 2rem; }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-label {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  color: var(--coral); font-size: 1.2rem; margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+.section-subtitle {
+  color: var(--gray-400); font-size: 1.05rem; font-weight: 300;
+  max-width: 600px; line-height: 1.7; margin-bottom: 3rem;
+}
+
+/* PROJECT SECTION */
+#project { background: var(--navy); color: var(--white); }
+#project .section-title { color: var(--white); }
+#project .section-subtitle { color: rgba(255,255,255,0.5); }
+.project-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem; margin-top: 2rem;
+}
+.project-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding: 2rem; transition: all var(--transition);
+}
+.project-card:hover {
+  background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15);
+  transform: translateY(-4px);
+}
+.project-card .card-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(232,93,74,0.15); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem; font-size: 1.3rem;
+}
+.project-card h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  margin-bottom: 0.5rem; color: var(--white);
+}
+.project-card p { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; }
+
+/* UNITS SECTION */
+.unit-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem; margin-top: 2rem;
+}
+.unit-card {
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--radius); padding: 2rem; text-align: center;
+  transition: all var(--transition); position: relative; overflow: hidden;
+}
+.unit-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--coral), var(--gold));
+}
+.unit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.unit-card.featured { border-color: var(--coral); }
+.unit-card.featured::before { background: var(--coral); }
+.unit-type {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem;
+  font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;
+}
+.unit-count { color: var(--coral); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; }
+.unit-sizes { color: var(--gray-600); font-size: 0.9rem; line-height: 1.8; }
+.unit-price {
+  font-weight: 700; color: var(--navy); font-size: 1.1rem;
+  margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);
+}
+
+/* FLOOR PLANS */
+.floorplan-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem; margin-top: 2rem;
+}
+.floorplan-card {
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm); padding: 1.5rem; text-align: center;
+  cursor: pointer; transition: all var(--transition);
+}
+.floorplan-card:hover { border-color: var(--coral); box-shadow: var(--shadow-md); }
+.floorplan-card .fp-type { font-weight: 600; color: var(--navy); font-size: 0.95rem; margin-bottom: 0.3rem; }
+.floorplan-card .fp-size { color: var(--gray-400); font-size: 0.85rem; }
+
+/* AMENITIES */
+.amenities-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem; margin-top: 2rem;
+}
+.amenity-item {
+  display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem;
+  background: var(--gray-50); border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+.amenity-item:hover { background: var(--gray-100); }
+.amenity-icon { font-size: 1.5rem; flex-shrink: 0; }
+.amenity-text h4 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
+.amenity-text p { font-size: 0.85rem; color: var(--gray-400); }
+
+/* LOCATION */
+#location { background: var(--gray-50); }
+.location-content {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+.location-text p { color: var(--gray-600); line-height: 1.8; margin-bottom: 1.5rem; }
+.location-highlights { list-style: none; display: grid; gap: 0.8rem; }
+.location-highlights li {
+  display: flex; align-items: center; gap: 0.8rem;
+  color: var(--gray-800); font-weight: 500; font-size: 0.95rem;
+}
+.location-highlights li::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--coral); flex-shrink: 0;
+}
+
+/* ABOUT */
+.about-content {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+.about-text p { color: var(--gray-600); line-height: 1.8; margin-bottom: 1.5rem; }
+.about-stat {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+.stat-box {
+  background: var(--gray-50); border-radius: var(--radius); padding: 2rem;
+  text-align: center; border: 1px solid var(--gray-200);
+}
+.stat-box .stat-num {
+  font-family: 'Playfair Display', serif; font-size: 2.2rem;
+  font-weight: 700; color: var(--navy); margin-bottom: 0.3rem;
+}
+.stat-box .stat-desc { color: var(--gray-400); font-size: 0.85rem; }
+
+/* REGISTER */
+#register { background: linear-gradient(135deg, var(--navy), #0d1f3c); color: var(--white); }
+#register .section-title { color: var(--white); }
+#register .section-subtitle { color: rgba(255,255,255,0.5); }
+.register-form {
+  max-width: 560px; margin: 0 auto;
+  display: grid; gap: 1rem;
+}
+.register-form input, .register-form select {
+  padding: 1rem 1.2rem; border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05);
+  color: var(--white); font-size: 0.95rem; font-family: 'Inter', sans-serif;
+  transition: all var(--transition);
+}
+.register-form input:focus, .register-form select:focus {
+  outline: none; border-color: var(--coral); background: rgba(255,255,255,0.08);
+}
+.register-form input::placeholder { color: rgba(255,255,255,0.3); }
+.register-form select option { background: var(--navy); color: var(--white); }
+.register-form .btn-primary { width: 100%; text-align: center; margin-top: 0.5rem; }
+
+/* FOOTER */
+footer {
+  background: var(--navy); color: rgba(255,255,255,0.5);
+  padding: 4rem 2rem 2rem; font-size: 0.9rem;
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+}
+.footer-brand h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  color: var(--white); margin-bottom: 0.8rem;
+}
+.footer-brand p { line-height: 1.7; margin-bottom: 1rem; }
+.footer-col h4 {
+  color: var(--white); font-size: 0.85rem; text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 1.2rem;
+}
+.footer-col a {
+  display: block; color: rgba(255,255,255,0.5); text-decoration: none;
+  margin-bottom: 0.6rem; transition: color var(--transition);
+}
+.footer-col a:hover { color: var(--coral); }
+.footer-bottom {
+  max-width: 1280px; margin: 3rem auto 0; padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-content p { max-width: 100%; }
+  .hero-cta { justify-content: center; }
+  .hero-visual { display: none; }
+  .location-content, .about-content { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column; position: absolute;
+    top: 72px; left: 0; right: 0; background: var(--white);
+    padding: 1.5rem 2rem; gap: 1rem; box-shadow: var(--shadow-lg);
+  }
+  .mobile-toggle { display: block; }
+  .hero { padding: 100px 1.5rem 60px; }
+  section { padding: 4rem 1.5rem; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .about-stat { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Crystal<span>.</span>Prime</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#project">The Hudson</a></li>
+      <li><a href="#units">Residences</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#register" class="nav-cta">Register Interest</a></li>
+    </ul>
+    <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h2>Opal by Crystal</h2>
+      <h1>Affordable Luxury<br>Comes to <span>Dubai</span></h1>
+      <p>Crystal Prime Real Estate Development brings India's trusted craftsmanship to the UAE. Introducing Opal — our residential edition for those who believe luxury should be intentional, not extravagant.</p>
+      <div class="hero-cta">
+        <a href="#register" class="btn-primary">Register Interest</a>
+        <a href="#project" class="btn-outline">Explore The Hudson</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="stat-line"><span class="stat-label">First Project</span><span class="stat-value">The Hudson</span></div>
+        <div class="stat-line"><span class="stat-label">Location</span><span class="stat-value">JVC, Dubai</span></div>
+        <div class="stat-line"><span class="stat-label">Total Units</span><span class="stat-value">96</span></div>
+        <div class="stat-line"><span class="stat-label">Starting From</span><span class="stat-value highlight">AED 650K</span></div>
+        <div class="stat-line"><span class="stat-label">Handover</span><span class="stat-value">Q2 2027</span></div>
+        <div class="stat-line"><span class="stat-label">Payment Plan</span><span class="stat-value">40/60</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE HUDSON -->
+<section id="project">
+  <div class="section-inner">
+    <div class="section-label">Introducing</div>
+    <div class="section-title">The Hudson</div>
+    <div class="section-subtitle">A 96-unit freehold residence in Jumeirah Village Circle, District 15 — where thoughtful design meets attainable luxury. Chiller-free. Pet-friendly. Built for the way you live.</div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-icon">🏢</div>
+        <h3>Premium Residences</h3>
+        <p>34 studios, 42 one-bedrooms across three layouts, plus a rare three-bedroom penthouse. Every unit designed with intention.</p>
+      </div>
+      <div class="project-card">
+        <div class="card-icon">🏊</div>
+        <h3>Resort-Style Amenities</h3>
+        <p>28m swimming pool, state-of-the-art gym, steam room, pickleball & basketball courts, BBQ area, and a dedicated kids' pool.</p>
+      </div>
+      <div class="project-card">
+        <div class="card-icon">🌿</div>
+        <h3>Green Living</h3>
+        <p>Chiller-free living. Pet-friendly community. Landscaped gardens. JVC's most walkable district — District 15, Street 5.</p>
+      </div>
+      <div class="project-card">
+        <div class="card-icon">💰</div>
+        <h3>Smart Investment</h3>
+        <p>40/60 payment plan. Studio from AED 650,000. 1-bedroom from AED 985,000. Freehold. Strong rental yields in JVC.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNITS -->
+<section id="units">
+  <div class="section-inner">
+    <div class="section-label">The Residences</div>
+    <div class="section-title">Choose Your Space</div>
+    <div class="section-subtitle">Four distinct layouts — each designed to maximize light, flow, and the feeling of home. All units are chiller-free and pet-friendly.</div>
+    <div class="unit-grid">
+      <div class="unit-card">
+        <div class="unit-type">Studio</div>
+        <div class="unit-count">34 Units</div>
+        <div class="unit-sizes">280 – 418 sq. ft.<br>Smart layout<br>Built-in storage</div>
+        <div class="unit-price">From AED 650,000</div>
+      </div>
+      <div class="unit-card">
+        <div class="unit-type">1 Bed — 1.5 Bath</div>
+        <div class="unit-count">22 Units</div>
+        <div class="unit-sizes">362 – 604 sq. ft.<br>Guest powder room<br>Open-plan living</div>
+        <div class="unit-price">From AED 985,000</div>
+      </div>
+      <div class="unit-card featured">
+        <div class="unit-type">1 Bed — 2 Bath</div>
+        <div class="unit-count">20 Units</div>
+        <div class="unit-sizes">366 – 742 sq. ft.<br>Master ensuite<br>Private balcony</div>
+        <div class="unit-price">From AED 1,150,000</div>
+      </div>
+      <div class="unit-card">
+        <div class="unit-type">1 Bed + Study</div>
+        <div class="unit-count">19 Units</div>
+        <div class="unit-sizes">383 – 1,221 sq. ft.<br>Flexible study/bedroom<br>Expansive layouts</div>
+        <div class="unit-price">From AED 1,350,000</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:3rem;">
+      <a href="#register" class="btn-primary" style="background:var(--navy);">Download Floor Plans</a>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section style="background: var(--gray-50);">
+  <div class="section-inner">
+    <div class="section-label">Experience</div>
+    <div class="section-title">Amenities That Matter</div>
+    <div class="section-subtitle">At Opal, every amenity is chosen with purpose. Nothing excessive. Everything essential.</div>
+    <div class="amenities-grid">
+      <div class="amenity-item"><span class="amenity-icon">🏊</span><div class="amenity-text"><h4>28m Swimming Pool</h4><p>Temperature-controlled, resort-style</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">💪</span><div class="amenity-text"><h4>State-of-the-Art Gym</h4><p>Premium equipment, yoga zone</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">🧖</span><div class="amenity-text"><h4>Steam Room</h4><p>Full spa-quality steam facilities</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">🏀</span><div class="amenity-text"><h4>Pickleball & Basketball</h4><p>Multi-sport courts</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">🍖</span><div class="amenity-text"><h4>BBQ Area</h4><p>Outdoor entertaining space</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">👶</span><div class="amenity-text"><h4>Kids' Pool</h4><p>Dedicated safe shallow pool</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">🐾</span><div class="amenity-text"><h4>Pet-Friendly</h4><p>Your pets are welcome here</p></div></div>
+      <div class="amenity-item"><span class="amenity-icon">❄️</span><div class="amenity-text"><h4>Chiller-Free</h4><p>No separate AC charges</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="section-inner">
+    <div class="location-content">
+      <div>
+        <div class="section-label">Location</div>
+        <div class="section-title">JVC, District 15</div>
+        <p>Jumeirah Village Circle is Dubai's fastest-growing family community. District 15 sits at its heart — minutes from Circle Mall, top schools, and major highways. The Hudson occupies a prime position on Street 5, offering the perfect balance of connectivity and calm.</p>
+        <ul class="location-highlights">
+          <li>5 min to Circle Mall</li>
+          <li>12 min to Dubai Marina</li>
+          <li>15 min to Palm Jumeirah</li>
+          <li>20 min to Downtown Dubai</li>
+          <li>25 min to DXB Airport</li>
+          <li>30 min to DWC Airport</li>
+        </ul>
+      </div>
+      <div class="about-stat">
+        <div class="stat-box"><div class="stat-num">96</div><div class="stat-desc">Premium Units</div></div>
+        <div class="stat-box"><div class="stat-num">40/60</div><div class="stat-desc">Payment Plan</div></div>
+        <div class="stat-box"><div class="stat-num">AED 650K</div><div class="stat-desc">Starting Price</div></div>
+        <div class="stat-box"><div class="stat-num">Freehold</div><div class="stat-desc">Ownership</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-content">
+      <div>
+        <div class="section-label">Our Story</div>
+        <div class="section-title">From India,<br>For the World</div>
+        <p>Crystal Prime Real Estate Development brings decades of Indian construction excellence to Dubai. With landmark projects across Mumbai, Pune, Delhi, Bengaluru, Chennai, Kolkata, and Gujarat, we've built a reputation for delivering on time, every time.</p>
+        <p>Now, we bring that same discipline to the UAE. Opal is our promise: build less, build better. Every residence is a statement of intention — luxury that doesn't shout, design that doesn't compromise, and value that endures.</p>
+      </div>
+      <div class="about-stat">
+        <div class="stat-box"><div class="stat-num">7</div><div class="stat-desc">Indian Cities</div></div>
+        <div class="stat-box"><div class="stat-num">20+</div><div class="stat-desc">Years Experience</div></div>
+        <div class="stat-box"><div class="stat-num">Dubai</div><div class="stat-desc">New Frontier</div></div>
+        <div class="stat-box"><div class="stat-num">Opal</div><div class="stat-desc">Residential Brand</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-label">Be First</div>
+    <div class="section-title">Register Your Interest</div>
+    <div class="section-subtitle" style="margin:0 auto 3rem;">Be among the first to receive floor plans, pricing details, and exclusive launch offers for The Hudson at Opal by Crystal.</div>
+    <form class="register-form" onsubmit="event.preventDefault(); alert('Thank you! We will be in touch shortly.');">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="tel" placeholder="Phone Number">
+      <select>
+        <option>Interested Unit Type</option>
+        <option>Studio — from AED 650K</option>
+        <option>1 Bed (1.5 Bath) — from AED 985K</option>
+        <option>1 Bed (2 Bath) — from AED 1.15M</option>
+        <option>1 Bed + Study — from AED 1.35M</option>
+        <option>Just browsing</option>
+      </select>
+      <button type="submit" class="btn-primary">Submit →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Crystal<strong style="color:var(--coral);">.</strong>Prime</h3>
+      <p>Crystal Prime Real Estate Development LLC. Building with intention since 2004. India → Dubai.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Projects</h4>
+      <a href="#project">The Hudson</a>
+      <a href="#">Coming Soon</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#about">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:+971554587040">+971 55 458 7040</a>
+      <a href="mailto:hello@crystal-group.ae">hello@crystal.re</a>
+      <span style="color:rgba(255,255,255,0.3);">Dubai, UAE</span>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Crystal Prime Real Estate Development. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.3);">Opal by Crystal — Affordable Luxury</span>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Active nav on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = '1'; });
+}, { threshold: 0.1 });
+document.querySelectorAll('section').forEach(s => { s.style.opacity = '0'; s.style.transition = 'opacity 0.6s ease'; observer.observe(s); });
+// Make hero always visible
+document.getElementById('hero').style.opacity = '1';
+</script>
+
+</body>
+</html>
